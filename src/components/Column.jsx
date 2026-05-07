@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useDroppable } from '@dnd-kit/core'
 import Card from './Card'
 
-function Column({ titulo, tarjetas, columnaId, onAgregarTarea, onEliminar, onEditar }) {
+function Column({ titulo, tarjetas, columnaId, onAgregarTarea, onEliminar, onEditar, onMover }) {
   const [mostrarForm, setMostrarForm] = useState(false)
   const [nuevoTitulo, setNuevoTitulo] = useState("")
   const [nuevaDescripcion, setNuevaDescripcion] = useState("")
@@ -36,8 +36,10 @@ function Column({ titulo, tarjetas, columnaId, onAgregarTarea, onEliminar, onEdi
             titulo={tarjeta.titulo}
             descripcion={tarjeta.descripcion}
             prioridad={tarjeta.prioridad}
+            columna={tarjeta.columna}
             onEliminar={onEliminar}
             onEditar={onEditar}
+            onMover={onMover}
           />
         ))}
       </div>
