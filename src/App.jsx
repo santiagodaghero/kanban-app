@@ -1,5 +1,15 @@
 import { useState, useEffect } from 'react'
+import { 
+  DndContext, 
+  DragOverlay, 
+  pointerWithin,
+  useSensor,
+  useSensors,
+  PointerSensor,
+  TouchSensor
+} from '@dnd-kit/core'
 import Column from './components/Column'
+import Card from './components/Card'
 
 function App() {
   const [tareas, setTareas] = useState(() => {
@@ -11,6 +21,22 @@ function App() {
       { id: 4, titulo: "Publicar portfolio", descripcion: "Subir a GitHub Pages", prioridad: "alta", columna: "terminado" },
     ]
   })
+
+  const [activeTarea, setActiveTarea] = useState(null)
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        tolerance: 5,
+      },
+    })
+  )
 
   const columnas = [
     { id: "porHacer",   titulo: "📋 Por hacer" },
@@ -51,32 +77,66 @@ function App() {
     localStorage.setItem("tareas", JSON.stringify(tareas))
   }, [tareas])
 
-  return (
-  <div>
-    <div className="header">
-      <span>🖥</span>
-      <div>
-        <h1>Kanban Board</h1>
-        <span>Gestión de proyectos</span>
-      </div>
-    </div>
-    <div className="board">
-      {columnas.map((col) => (
-        <Column
-          key={col.id}
-          titulo={col.titulo}
-          columnaId={col.id}
-          tarjetas={tareas.filter((t) => t.columna === col.id)}
-          onAgregarTarea={agregarTarea}
-          onEliminar={eliminarTarea}
-          onMover={moverTarea}
-          onEditar={editarTarea}
-        />
-      ))}
-    </div>
-  </div>
-)
+  const handleDragStart = (event) => {
+    const tarea = tareas.find((t) => t.id === event.active.id)
+    setActiveTarea(tarea)
+  }
 
+  const handleDragEnd = (event) => {
+    const { active, over } = event
+    setActiveTarea(null)
+    if (!over) return
+    const columnaDestino = over.id
+    const esColumna = columnas.some((c) => c.id === columnaDestino)
+    if (esColumna) {
+      moverTarea(active.id, columnaDestino)
+    }
+  }
+
+  return (
+    <div>
+      <div className="header">
+        <span>🖥</span>
+        <div>
+          <h1>Kanban Board</h1>
+          <span>Gestión de proyectos</span>
+        </div>
+      </div>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={pointerWithin}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+      >
+        <div className="board">
+          {columnas.map((col) => (
+            <Column
+              key={col.id}
+              titulo={col.titulo}
+              columnaId={col.id}
+              tarjetas={tareas.filter((t) => t.columna === col.id)}
+              onAgregarTarea={agregarTarea}
+              onEliminar={eliminarTarea}
+              onMover={moverTarea}
+              onEditar={editarTarea}
+            />
+          ))}
+        </div>
+        <DragOverlay>
+          {activeTarea ? (
+            <Card
+              id={activeTarea.id}
+              titulo={activeTarea.titulo}
+              descripcion={activeTarea.descripcion}
+              prioridad={activeTarea.prioridad}
+              onEliminar={() => {}}
+              onEditar={() => {}}
+            />
+          ) : null}
+        </DragOverlay>
+      </DndContext>
+    </div>
+  )
 }
 
 export default App

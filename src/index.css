@@ -323,3 +323,25 @@ body {
   border-color: rgba(255,255,255,0.4);
   color: rgba(255,255,255,0.7);
 }
+
+/* ── Responsive mobile ───────────────────────────────── */
+@media (max-width: 768px) {
+  .board {
+    flex-direction: column;
+    padding: 16px;
+    align-items: center;
+  }
+
+  .column {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .header {
+    padding: 14px 16px;
+  }
+
+  .header h1 {
+    font-size: 18px;
+  }
+}
