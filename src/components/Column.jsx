@@ -2,11 +2,13 @@ import { useState } from 'react'
 import { useDroppable } from '@dnd-kit/core'
 import Card from './Card'
 
-function Column({ titulo, tarjetas, columnaId, onAgregarTarea, onEliminar, onEditar, onMover }) {
-  const [mostrarForm, setMostrarForm] = useState(false)
+function Column({ titulo, tarjetas, columnaId, onAgregarTarea, onEliminar, onEditar, onMover, abrirForm, onFormCerrado }) {
+  const [mostrarFormLocal, setMostrarFormLocal] = useState(false)
   const [nuevoTitulo, setNuevoTitulo] = useState("")
   const [nuevaDescripcion, setNuevaDescripcion] = useState("")
   const [nuevaPrioridad, setNuevaPrioridad] = useState("media")
+
+  const mostrarForm = mostrarFormLocal || abrirForm
 
   const { setNodeRef, isOver } = useDroppable({ id: columnaId })
 
@@ -16,7 +18,8 @@ function Column({ titulo, tarjetas, columnaId, onAgregarTarea, onEliminar, onEdi
     setNuevoTitulo("")
     setNuevaDescripcion("")
     setNuevaPrioridad("media")
-    setMostrarForm(false)
+    setMostrarFormLocal(false)
+    if (abrirForm) onFormCerrado()
   }
 
   return (
@@ -68,11 +71,14 @@ function Column({ titulo, tarjetas, columnaId, onAgregarTarea, onEliminar, onEdi
           </select>
           <div className="form-buttons">
             <button className="btn-confirmar" onClick={handleAgregar}>Agregar</button>
-            <button className="btn-cancelar" onClick={() => setMostrarForm(false)}>Cancelar</button>
+            <button className="btn-cancelar" onClick={() => {
+              setMostrarFormLocal(false)
+              if (abrirForm) onFormCerrado()
+            }}>Cancelar</button>
           </div>
         </div>
       ) : (
-        <button className="btn-agregar" onClick={() => setMostrarForm(true)}>+ Agregar tarea</button>
+        <button className="btn-agregar" onClick={() => setMostrarFormLocal(true)}>+ Agregar tarea</button>
       )}
     </div>
   )

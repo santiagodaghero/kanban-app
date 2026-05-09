@@ -36,6 +36,10 @@ body {
   color: rgba(255,255,255,0.5);
 }
 
+.btn-delete {
+  font-size: 16px;
+}
+
 /* ── Board ───────────────────────────────────────────── */
 .board {
   display: flex;
@@ -273,20 +277,22 @@ body {
 }
 
 .btn-confirmar {
-  background-color: rgba(0,0,0,0.2);
-  color: rgba(0,0,0,0.75);
+  background-color: #4CAF7D;
+  color: #FFFFFF;
   border: none;
-  border-radius: 4px;
-  padding: 7px 14px;
-  font-size: 12px;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  flex: 1;
   transition: background-color 0.15s;
+  display: block;
+  margin-left: auto;
+  margin-top: 20px;
 }
 
 .btn-confirmar:hover {
-  background-color: rgba(0,0,0,0.3);
+  background-color: #3d9e6a;
 }
 
 .btn-cancelar {
@@ -346,6 +352,270 @@ body {
   background-color: rgba(0,0,0,0.25);
   color: rgba(0,0,0,0.85);
 }
+
+/* ── Botón primera tarea ─────────────────────────────── */
+.btn-primera-tarea {
+  margin-left: auto;
+  background-color: #00D464;
+  color: #0A1628;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn-primera-tarea:hover {
+  background-color: #00B855;
+}
+
+/* ── Header texto ────────────────────────────────────── */
+.header-text h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.header-text span {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ── Bienvenida ──────────────────────────────────────── */
+.bienvenida {
+  background-color: #0F2040;
+  border: 1px solid #1A3A6A;
+  border-radius: 14px;
+  margin: 24px 32px;
+  padding: 28px;
+}
+
+.bienvenida-intro {
+  margin-bottom: 28px;
+}
+
+.bienvenida-intro h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+}
+
+.bienvenida-intro p {
+  color: #5B7FA6;
+  font-size: 14px;
+}
+
+/* Preview mini pizarra */
+.bienvenida-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.preview-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.preview-card {
+  width: 48px;
+  height: 20px;
+  border-radius: 3px;
+}
+
+.preview-card.amarillo { background-color: #FFD95A; }
+.preview-card.rojo     { background-color: #FF8C69; }
+.preview-card.verde    { background-color: #90EE90; }
+
+.preview-arrow {
+  color: #00D4FF;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Pasos */
+.bienvenida-pasos {
+  display: flex;
+  gap: 24px;
+}
+
+.paso {
+  flex: 1;
+  background-color: #1e2d3d;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 18px;
+  position: relative;
+}
+
+.paso-numero {
+  position: absolute;
+  top: -12px;
+  left: 16px;
+  background-color: #4CAF7D;
+  color: #FFFFFF;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.paso-icono {
+  font-size: 22px;
+  margin-bottom: 8px;
+  margin-top: 4px;
+  color: #4CAF7D;
+}
+
+.paso h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+}
+
+.paso p {
+  font-size: 12px;
+  color: #8899AA;
+  line-height: 1.6;
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 2px;
+}
+
+.dot.rojo    { background-color: #FF8C69; }
+.dot.amarillo{ background-color: #FFD95A; }
+.dot.verde   { background-color: #90EE90; }
+
+.bienvenida-hint {
+  text-align: center;
+  color: #5B7FA6;
+  font-size: 13px;
+  margin-top: 20px;
+}
+
+/* ── Botón ayuda ─────────────────────────────────────── */
+.btn-ayuda {
+  margin-left: auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid #1A3A6A;
+  background: none;
+  color: #5B7FA6;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-ayuda:hover {
+  border-color: #00D4FF;
+  color: #00D4FF;
+}
+
+/* ── Modal ───────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+
+.modal {
+  background-color: #1a2332;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 28px;
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.modal-cerrar {
+  background: none;
+  border: 1px solid #1A3A6A;
+  color: #5B7FA6;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.modal-cerrar:hover {
+  border-color: #FF6B6B;
+  color: #FF6B6B;
+}
+
+/* ── Responsive modal ────────────────────────────────── */
+@media (max-width: 768px) {
+  .modal {
+    padding: 20px;
+  }
+
+  .bienvenida-pasos {
+    flex-direction: column;
+  }
+}
+
+/* ── Responsive bienvenida ───────────────────────────── */
+@media (max-width: 768px) {
+  .bienvenida-pasos {
+    flex-direction: column;
+  }
+
+  .bienvenida {
+    margin: 16px;
+    padding: 20px;
+  }
+
+  .bienvenida-preview {
+    display: none;
+  }
+}
+
+
 
 /* ── Responsive mobile ───────────────────────────────── */
 @media (max-width: 768px) {
