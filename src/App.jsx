@@ -26,6 +26,8 @@ function App() {
 
   const [activeTarea, setActiveTarea] = useState(null)
 
+  const [mostrarPanel, setMostrarPanel] = useState(true)
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -97,14 +99,17 @@ function App() {
     }
   }
 
-  return (
+ return (
   <div>
     <div className="header">
       <div className="header-text">
         <h1>Kanban Board</h1>
         <span>Gestor de proyectos</span>
       </div>
-      <button className="btn-ayuda" onClick={() => setMostrarAyuda(true)}>?</button>
+      <button className="btn-ayuda" onClick={() => {
+        setMostrarAyuda(true)
+        setMostrarPanel(true)
+      }}>?</button>
     </div>
 
     {mostrarAyuda && (
@@ -114,7 +119,6 @@ function App() {
             <h2>¿Cómo usar el Kanban?</h2>
             <button className="modal-cerrar" onClick={() => setMostrarAyuda(false)}>✕</button>
           </div>
-
           <div className="bienvenida-pasos">
             <div className="paso">
               <div className="paso-numero">1</div>
@@ -135,7 +139,6 @@ function App() {
               <p>Modificá la información de tus tareas o eliminalas en cualquier momento.</p>
             </div>
           </div>
-
           <button className="btn-confirmar" onClick={() => setMostrarAyuda(false)}>
             ¡Entendido!
           </button>
@@ -149,21 +152,53 @@ function App() {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="board">
-        {columnas.map((col) => (
-          <Column
-            key={col.id}
-            titulo={col.titulo}
-            columnaId={col.id}
-            tarjetas={tareas.filter((t) => t.columna === col.id)}
-            onAgregarTarea={agregarTarea}
-            onEliminar={eliminarTarea}
-            onMover={moverTarea}
-            onEditar={editarTarea}
-            abrirForm={abrirPrimeraColumna && col.id === "porHacer"}
-            onFormCerrado={() => setAbrirPrimeraColumna(false)}
-          />
-        ))}
+      <div className="app-layout">
+        <div className="board">
+          {columnas.map((col) => (
+            <Column
+              key={col.id}
+              titulo={col.titulo}
+              columnaId={col.id}
+              tarjetas={tareas.filter((t) => t.columna === col.id)}
+              onAgregarTarea={agregarTarea}
+              onEliminar={eliminarTarea}
+              onMover={moverTarea}
+              onEditar={editarTarea}
+              abrirForm={abrirPrimeraColumna && col.id === "porHacer"}
+              onFormCerrado={() => setAbrirPrimeraColumna(false)}
+            />
+          ))}
+        </div>
+
+        {mostrarPanel && (
+          <div className="panel-instrucciones">
+            <h3>¿Cómo usar el Kanban?</h3>
+            <div className="panel-paso">
+              <div className="paso-numero">1</div>
+              <div>
+                <strong>Creá una tarea</strong>
+                <p>Hacé clic en "+ Agregar tarea" y asignale título, descripción y prioridad.</p>
+              </div>
+            </div>
+            <div className="panel-paso">
+              <div className="paso-numero">2</div>
+              <div>
+                <strong>Arrastrá las tarjetas</strong>
+                <p>Mové cada tarea entre 📋 Por hacer, ⚡ En progreso y ✅ Terminado.</p>
+              </div>
+            </div>
+            <div className="panel-paso">
+              <div className="paso-numero">3</div>
+              <div>
+                <strong>Editá o eliminá</strong>
+                <p>Usá los botones ✏️ y 🗑 para modificar o eliminar tareas en cualquier momento.</p>
+              </div>
+            </div>
+            <button className="btn-confirmar" onClick={() => setMostrarPanel(false)}>
+              ¡Entendido!
+            </button>
+          </div>
+        )}
       </div>
       <DragOverlay>
         {activeTarea ? (
